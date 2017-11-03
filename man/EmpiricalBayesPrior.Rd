@@ -19,6 +19,9 @@ A vector of length 2 containing the two parameters
 Computes the prior parameters (i.e. pseudocounts incremented by 1) for
 the log2 fold change distribution
 }
+\examples{
+  EmpiricalBayesPrior(rnorm(1000,200),rnorm(1000,100))
+}
 \seealso{
 PsiLFC
 }

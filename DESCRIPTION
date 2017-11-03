@@ -1,7 +1,7 @@
 Package: lfc
 Type: Package
 Title: Log fold change distribution tools for working with ratios of counts
-Version: 0.1.0
+Version: 0.2.0
 Author: Florian Erhard
 Maintainer: Florian Erhard <florian.erhard@uni-wuerzburg.de>
 Description: Ratios of count data such as obtained from RNA-seq are modelled
@@ -12,7 +12,10 @@ LazyData: true
 RoxygenNote: 6.0.1
 URL: http://github.com/florianerhard/lfc
 BugReports: http://github.com/florianerhard/lfc/issues
+Imports: stats
 Suggests: knitr,
     rmarkdown,
-    DESeq2
+    DESeq2,
+    SummarizedExperiment
 VignetteBuilder: knitr
+biocViews: Bayesian, Transcriptomics, DifferentialExpression

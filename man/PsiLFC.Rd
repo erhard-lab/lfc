@@ -15,6 +15,8 @@ PsiLFC(A, B, prior = EmpiricalBayesPrior(A, B), normalizeFun = CenterMedian,
 \item{prior}{Vector of length 2 of the prior parameters}
 
 \item{normalizeFun}{Function to normalize the obtained effect sizes}
+
+\item{cre}{Compute credible intervals as well? (can also be a vector of quantiles)}
 }
 \value{
 Either a vector containing the estimates, or a data frame containing
@@ -22,4 +24,7 @@ Either a vector containing the estimates, or a data frame containing
 }
 \description{
 Computes the optimal effect size estimate and credible intervals if needed.
+}
+\examples{
+  PsiLFC(rnorm(1000,200),rnorm(1000,100))
 }

@@ -4,7 +4,7 @@
 \alias{PsiLFC.se}
 \title{Psi LFC effect size estimator}
 \usage{
-PsiLFC.se(se, contrast, cre = F)
+PsiLFC.se(se, contrast, cre = FALSE)
 }
 \arguments{
 \item{se}{SummarizedExperiment object}
@@ -20,4 +20,8 @@ Either a vector containing the estimates, or a data frame containing
 \description{
 Computes the optimal effect size estimate and credible intervals if needed
 for a Bioconductor SummarizedExperiment object
+}
+\examples{
+   data(airway, package="airway")
+   head(PsiLFC.se(airway,contrast=c("dex","untrt","trt")))
 }

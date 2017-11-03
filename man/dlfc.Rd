@@ -31,6 +31,9 @@ otherwise, P[X > x].}
 
 \item{n}{number of observations}
 }
+\value{
+The density
+}
 \description{
 Density, distribution function, quantile function and random
 generation for the log2 fold change  distribution with parameters

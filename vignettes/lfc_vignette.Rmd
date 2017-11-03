@@ -89,7 +89,7 @@ Also, this package provides a drop-in replacement for DESeq2's `results` functio
 ```{R message=FALSE, warning=FALSE}
 dds <- DESeqDataSetFromMatrix(countData = assay(airway),colData = colData(airway),design= ~ dex)
 dds <- DESeq(dds)
-res <- results(dds, contrast=c("dex","untrt","trt"),cre=T)
+res <- results(dds, contrast=c("dex","untrt","trt"),cre=TRUE)
 head(res)
 ```
 

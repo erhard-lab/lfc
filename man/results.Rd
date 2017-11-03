@@ -4,7 +4,7 @@
 \alias{results}
 \title{Psi LFC effect size estimator for DESeq2}
 \usage{
-results(object, contrast, cre = F, ...)
+results(object, contrast, cre = FALSE, ...)
 }
 \arguments{
 \item{object}{the DESeq2DataSet object}
@@ -13,6 +13,8 @@ results(object, contrast, cre = F, ...)
 to compute effect sizes for (<name>,<A>,<B>)}
 
 \item{cre}{Compute credible intervals as well? (can also be a vector of quantiles)}
+
+\item{...}{Handed over to DESeq2's results function}
 }
 \value{
 Either a vector containing the estimates, or a data frame containing

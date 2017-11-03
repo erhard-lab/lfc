@@ -15,6 +15,9 @@ A vector of length 2 containing the two parameters
 \description{
 Subtract the median of the given vector (for normalizing log2 fold changes).
 }
+\examples{
+  CenterMedian(rnorm(1000,200))
+}
 \seealso{
 PsiLFC
 }

@@ -38,6 +38,7 @@ ltop <- function(l) 2^l/(1+2^l)
 #' @param a non-negative parameter
 #' @param b non-negative parameter
 #' @param log,log.p if TRUE, probabilities p are given as log(p)
+#' @return The density
 #' @examples
 #' x <- seq (-5,5,by=0.01)
 #' plot(x,dlfc(x,1,1))
