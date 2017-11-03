@@ -12,3 +12,7 @@ LazyData: true
 RoxygenNote: 6.0.1
 URL: http://github.com/florianerhard/lfc
 BugReports: http://github.com/florianerhard/lfc/issues
+Suggests: knitr,
+    rmarkdown,
+    DESeq2
+VignetteBuilder: knitr

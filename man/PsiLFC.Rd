@@ -2,9 +2,10 @@
 % Please edit documentation in R/psi_lfc.R
 \name{PsiLFC}
 \alias{PsiLFC}
-\title{Computes the optimal effect size estimate.}
+\title{Psi LFC effect size estimator}
 \usage{
-PsiLFC(A, B, prior = EmpiricalBayesPrior(A, B), normalizeFun = CenterMedian)
+PsiLFC(A, B, prior = EmpiricalBayesPrior(A, B), normalizeFun = CenterMedian,
+  cre = FALSE)
 }
 \arguments{
 \item{A}{Vector of counts from condition A}
@@ -16,8 +17,9 @@ PsiLFC(A, B, prior = EmpiricalBayesPrior(A, B), normalizeFun = CenterMedian)
 \item{normalizeFun}{Function to normalize the obtained effect sizes}
 }
 \value{
-A vector of length 2 containing the two parameters
+Either a vector containing the estimates, or a data frame containing
+    the credible interval as well
 }
 \description{
-Computes the optimal effect size estimate.
+Computes the optimal effect size estimate and credible intervals if needed.
 }

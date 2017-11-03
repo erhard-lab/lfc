@@ -1,0 +1,100 @@
+---
+title: "Using LFC"
+author: "Florian Erhard"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  
+references:
+- id: erhard_count_2015
+  title: Count ratio model reveals bias affecting NGS fold changes
+  author:
+  - family: Erhard
+    given: Florian
+  - family: Zimmer
+    given: Ralf
+  container-title: Nucleic Acids Research
+  volume: 43
+  URL: 'http://nar.oxfordjournals.org/content/43/20/e136'
+  DOI: 10.1093/nar/gkv696
+  issue: 20
+  type: article-journal
+  issued:
+    year: 2015
+- id: erhard_pseudo_2017
+  title: On pseudo-counts and fold changes for digital expression measurements
+  author:
+  - family: Erhard
+    given: Florian
+  container-title: submitted
+  type: article-journal
+  issued:
+    year: 2017
+---
+
+Digital expression measurements (e.g. RNA-seq) are often used to determine the change of quantities upon some treatment or stimulus. The resulting value of interest is the *fold change* (often logarithmized).
+
+This effect size of the change is often treated as a value that can be computed as $lfc(A,B)=\log_2 \frac{A}{B}$. However, due to the probabilistic nature of the experiments, the effect size rather is a random variable that must be estimated. This fact becomes obvious when considering that $A$ or $B$ can be 0, even if the true abundance is non-zero.
+
+We have shown that this can be modelled in a Bayesian framework @erhard_count_2015 @erhard_pseudo_2017. The intuitively computed effect size is the maximum likelihood estimator of a binomial model, where the effect size is not represented as fold change, but as proportion (of note, the log fold change simply is the logit transformed proportion). The Bayesian prior corresponds to pseudocounts frequently used to prevent infinite fold changes by $A$ or $B$ being zero. Furthermore, the Bayesian framework offers more advanced estimators (e.g. interval estimators or the posterior mean, which is the optimal estimator in terms of squared errors).
+
+This R package offers the implementation to harness the power of this framework.
+
+
+## Basic usage
+
+The most basic function to estimate effect sizes is 
+
+```R
+PsiLFC(A,B)
+```
+
+$A$ and $B$ are vectors of counts, corresponding to the n genes in conditions $A$ and $B$ (i.e. they are columns from the normal count matrices). What PsiLFC does it to obtain reasonable pseudocounts (see next section), compute the posterior mean for each entry, and then output normalized (i.e. median-centered) effect sizes in the log$_2$ fold change representation.
+
+
+Let's consider a real world example:
+
+```{R fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
+library(DESeq2)
+library(lfc)
+data(airway, package="airway")
+A <- assay(airway)[,2]
+B <- assay(airway)[,1]
+
+ll <- PsiLFC(A,B)
+plot(ecdf(ll),xlim=c(-1,1),xlab="Log2 fold change treated/untreated",ylab="Cumulative frequency",main="Cell N61311",col='blue')
+lines(ecdf(CenterMedian(log2((A+1)/(B+1)))),col='red')
+```
+
+This shows the log fold change distributions estimated by the posterior mean (blue) and the intuitive way using pseudocounts of 1 (red). This distribution is heavily distorted by several genes with no reads in any of the two conditions. Interestingly, the intuitive way of computing effect sizes results in an asymmetric distribution with more downregulated than upregulated genes.
+
+```{R fig.width=5, fig.height=5}
+plot(ecdf(ll[A>0 | B>0]),xlim=c(-1,1),xlab="Log2 fold change treated/untreated",ylab="Cumulative frequency",main="Cell N61311",col='blue')
+lines(ecdf(CenterMedian(log2((A+1)/(B+1))[A>0 | B>0])),col='red')
+``` 
+
+Here, only genes are considered that have at least one read in one of the two conditions. The intuitive fold changes still appear to overestimate changes, as well as show more artifacts.
+
+It is also possible to directly estimate effect sizes on SummarizedExperiment objects:
+
+```{R}
+head(PsiLFC.se(airway,contrast=c("dex","untrt","trt")))
+```
+
+Also, this package provides a drop-in replacement for DESeq2's `results` function:
+
+```{R message=FALSE, warning=FALSE}
+dds <- DESeqDataSetFromMatrix(countData = assay(airway),colData = colData(airway),design= ~ dex)
+dds <- DESeq(dds)
+res <- results(dds, contrast=c("dex","untrt","trt"),cre=T)
+head(res)
+```
+
+**Important:** To make this work, load `lfc` after `DESeq2`!
+
+Note that here we also computed the 90% credible interal. The parameter `cre` can also be given to `PsiLFC` or `PsiLFC.se`!
+
+# References
