@@ -7,7 +7,7 @@ Install the R package using the following commands on the R console:
 
 ```
 install.packages("devtools")
-devtools::install_github("florianerhard/lfc")
+devtools::install_github("erhard-lab/lfc")
 library(lfc)
 ```
 
