@@ -18,7 +18,7 @@ EmpiricalBayesPrior=function(A,B) {
 
     x=median(log(A)-log(B))
     y=max((quantile(log(A)-log(B),pnorm(1))-x)^2,(-quantile(log(A)-log(B),pnorm(-1))+x)^2)
-    if (is.infinite(y)) {
+    if (is.infinite(x) || is.infinite(y)) {
         x=mean(log(A+1)-log(B+1))
         y=var(log(A+1)-log(B+1))
     }
