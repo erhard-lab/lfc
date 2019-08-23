@@ -53,7 +53,7 @@ CenterMedian <- function(l) l-median(l,na.rm=TRUE)
 #'   PsiLFC(rnorm(1000,200),rnorm(1000,100))
 PsiLFC=function(A,B, prior=EmpiricalBayesPrior(A,B), normalizeFun=CenterMedian,cre=FALSE) {
     lfc<-(digamma(A+prior[1])-digamma(B+prior[2]))/log(2)
-    r<-CenterMedian(lfc)
+    r<-normalizeFun(lfc)
     if (all(cre==TRUE)) cre = c(0.05,0.95)
     if (!missing(cre) & any(cre!=FALSE)){
         s<-sapply(cre,function(c) qlfc(c,A+prior[1],B+prior[2]))
