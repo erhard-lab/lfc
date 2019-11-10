@@ -57,7 +57,7 @@ PsiLFC=function(A,B, prior=EmpiricalBayesPrior(A,B), normalizeFun=CenterMedian,c
     if (all(cre==TRUE)) cre = c(0.05,0.95)
     if (!missing(cre) & any(cre!=FALSE)){
         s<-sapply(cre,function(c) qlfc(c,A+prior[1],B+prior[2]))
-        r<-cbind(data.frame(PsiLFC=lfc),s)
+        r<-cbind(data.frame(PsiLFC=r),s-lfc+r)
         names(r)[-1]<-paste("Credible",cre)
     }
     r
