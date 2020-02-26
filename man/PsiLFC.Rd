@@ -4,8 +4,13 @@
 \alias{PsiLFC}
 \title{Psi LFC effect size estimator}
 \usage{
-PsiLFC(A, B, prior = EmpiricalBayesPrior(A, B), normalizeFun = CenterMedian,
-  cre = FALSE)
+PsiLFC(
+  A,
+  B,
+  prior = EmpiricalBayesPrior(A, B),
+  normalizeFun = CenterMedian,
+  cre = FALSE
+)
 }
 \arguments{
 \item{A}{Vector of counts from condition A}

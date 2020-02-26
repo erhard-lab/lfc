@@ -2,6 +2,7 @@
 
 export(CenterMedian)
 export(EmpiricalBayesPrior)
+export(NormLFC)
 export(PsiLFC)
 export(PsiLFC.se)
 export(dlfc)

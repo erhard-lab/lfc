@@ -54,3 +54,4 @@ generation for the log2 fold change  distribution with parameters
 x <- seq (-5,5,by=0.01)
 plot(x,dlfc(x,1,1))
 }
+\concept{Log2 fold change distribution}

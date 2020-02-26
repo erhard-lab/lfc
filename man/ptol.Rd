@@ -24,5 +24,7 @@ ptol(2/3)
 \seealso{
 ltop
 
-Other Effect size representations: \code{\link{ltop}}
+Other Effect size representations: 
+\code{\link{ltop}()}
 }
+\concept{Effect size representations}

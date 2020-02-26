@@ -24,5 +24,7 @@ ptol(1)
 \seealso{
 ptol
 
-Other Effect size representations: \code{\link{ptol}}
+Other Effect size representations: 
+\code{\link{ptol}()}
 }
+\concept{Effect size representations}
