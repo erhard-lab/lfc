@@ -76,7 +76,7 @@ PsiLFC=function(A,B, prior=EmpiricalBayesPrior(A,B), normalizeFun=CenterMedian,c
 #' @examples
 #'   NormLFC(rnorm(1000,200),rnorm(1000,100))
 NormLFC=function(A,B, pseudo=c(1,1), normalizeFun=CenterMedian) {
-    lfc<-log2(A+prior[1])-log2(B+prior[2])
+    lfc<-log2(A+pseudo[1])-log2(B+pseudo[2])
     r<-normalizeFun(lfc)
     r
 }
