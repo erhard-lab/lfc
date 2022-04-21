@@ -97,17 +97,17 @@ NormLFC=function(A,B, pseudo=c(1,1), normalizeFun=CenterMedian) {
 #'    data(airway, package="airway")
 #'    head(PsiLFC.se(airway,contrast=c("dex","untrt","trt")))
 PsiLFC.se=function(se,contrast,cre=FALSE) {
-    if (!is.character(contrast) | length(contrast)!=3 | !(contrast[1] %in% names(colData(se))) | contrast[2]==contrast[3] ) {
+    if (!is.character(contrast) | length(contrast)!=3 | !(contrast[1] %in% names(SummarizedExperiment::colData(se))) | contrast[2]==contrast[3] ) {
         stop("'contrast' vector should be a character vector of length (colData,A,B)")
     }
 
-    f=do.call("colData",list(se))[,contrast[1]]
+    f=SummarizedExperiment::colData(se)[,contrast[1]]
     if (!all(contrast[2:3] %in% levels(f))){
         stop("'contrast' vector contains unknown levels!")
     }
 
     summ<-function(cont) {
-        r=do.call("assay",list(se))[,f==cont]
+        r=SummarizedExperiment::assay(se)[,f==cont]
         if (!is.vector(r)) r=apply(r,1,sum)
         r
     }

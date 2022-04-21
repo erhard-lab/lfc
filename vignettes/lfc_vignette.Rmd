@@ -4,42 +4,16 @@ author: "Florian Erhard"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{Using LFC}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
-  
-references:
-- id: erhard_count_2015
-  title: Count ratio model reveals bias affecting NGS fold changes
-  author:
-  - family: Erhard
-    given: Florian
-  - family: Zimmer
-    given: Ralf
-  container-title: Nucleic Acids Research
-  volume: 43
-  URL: 'http://nar.oxfordjournals.org/content/43/20/e136'
-  DOI: 10.1093/nar/gkv696
-  issue: 20
-  type: article-journal
-  issued:
-    year: 2015
-- id: erhard_pseudo_2017
-  title: On pseudo-counts and fold changes for digital expression measurements
-  author:
-  - family: Erhard
-    given: Florian
-  container-title: submitted
-  type: article-journal
-  issued:
-    year: 2017
 ---
 
 Digital expression measurements (e.g. RNA-seq) are often used to determine the change of quantities upon some treatment or stimulus. The resulting value of interest is the *fold change* (often logarithmized).
 
 This effect size of the change is often treated as a value that can be computed as $lfc(A,B)=\log_2 \frac{A}{B}$. However, due to the probabilistic nature of the experiments, the effect size rather is a random variable that must be estimated. This fact becomes obvious when considering that $A$ or $B$ can be 0, even if the true abundance is non-zero.
 
-We have shown that this can be modelled in a Bayesian framework @erhard_count_2015 @erhard_pseudo_2017. The intuitively computed effect size is the maximum likelihood estimator of a binomial model, where the effect size is not represented as fold change, but as proportion (of note, the log fold change simply is the logit transformed proportion). The Bayesian prior corresponds to pseudocounts frequently used to prevent infinite fold changes by $A$ or $B$ being zero. Furthermore, the Bayesian framework offers more advanced estimators (e.g. interval estimators or the posterior mean, which is the optimal estimator in terms of squared errors).
+We have shown that this can be modelled in a Bayesian framework [1,2]. The intuitively computed effect size is the maximum likelihood estimator of a binomial model, where the effect size is not represented as fold change, but as proportion (of note, the log fold change simply is the logit transformed proportion). The Bayesian prior corresponds to pseudocounts frequently used to prevent infinite fold changes by $A$ or $B$ being zero. Furthermore, the Bayesian framework offers more advanced estimators (e.g. interval estimators or the posterior mean, which is the optimal estimator in terms of squared errors).
 
 This R package offers the implementation to harness the power of this framework.
 
@@ -98,3 +72,6 @@ head(res)
 Note that here we also computed the 90% credible interal. The parameter `cre` can also be given to `PsiLFC` or `PsiLFC.se`!
 
 # References
+1. Erhard, F. (2018). Estimating pseudocounts and fold changes for digital expression measurements. Bioinformatics, 34(23), 4054–4063. https://doi.org/10.1093/bioinformatics/bty471
+2. Erhard, F., & Zimmer, R. (2015). Count ratio model reveals bias affecting NGS fold changes. Nucleic Acids Research, 43(20), e136–e136. https://doi.org/10.1093/nar/gkv696
+
