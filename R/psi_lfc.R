@@ -94,8 +94,10 @@ NormLFC=function(A,B, pseudo=c(1,1), normalizeFun=CenterMedian) {
 #'     the credible interval as well
 #' @export
 #' @examples
+#' \dontrun{
 #'    data(airway, package="airway")
 #'    head(PsiLFC.se(airway,contrast=c("dex","untrt","trt")))
+#' }
 PsiLFC.se=function(se,contrast,cre=FALSE) {
     if (!is.character(contrast) | length(contrast)!=3 | !(contrast[1] %in% names(SummarizedExperiment::colData(se))) | contrast[2]==contrast[3] ) {
         stop("'contrast' vector should be a character vector of length (colData,A,B)")

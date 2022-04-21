@@ -69,7 +69,7 @@ head(res)
 
 **Important:** To make this work, load `lfc` after `DESeq2`!
 
-Note that here we also computed the 90% credible interal. The parameter `cre` can also be given to `PsiLFC` or `PsiLFC.se`!
+Note that here we also computed the 90% credible interval. The parameter `cre` can also be given to `PsiLFC` or `PsiLFC.se`!
 
 # References
 1. Erhard, F. (2018). Estimating pseudocounts and fold changes for digital expression measurements. Bioinformatics, 34(23), 4054–4063. https://doi.org/10.1093/bioinformatics/bty471

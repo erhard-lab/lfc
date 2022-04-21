@@ -22,6 +22,8 @@ Computes the optimal effect size estimate and credible intervals if needed
 for a Bioconductor SummarizedExperiment object
 }
 \examples{
+\dontrun{
    data(airway, package="airway")
    head(PsiLFC.se(airway,contrast=c("dex","untrt","trt")))
+}
 }

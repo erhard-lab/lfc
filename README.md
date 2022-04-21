@@ -6,6 +6,12 @@ R package for modelling count ratio data
 Install the R package using the following commands on the R console:
 
 ```
+install.packages("lfc")
+library(lfc)
+```
+
+Alternatively, you can install from github:
+```
 install.packages("devtools")
 devtools::install_github("erhard-lab/lfc")
 library(lfc)
