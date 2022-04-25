@@ -5,7 +5,9 @@ Version: 0.2.2
 Author: Florian Erhard
 Maintainer: Florian Erhard <florian.erhard@uni-wuerzburg.de>
 Description: Ratios of count data such as obtained from RNA-seq are modelled
-    using Bayesian statistics to derive posteriors for effects sizes.
+    using Bayesian statistics to derive posteriors for effects sizes. This
+    approach is described in Erhard & Zimmer (2015) <doi:10.1093/nar/gkv696> 
+    and Erhard (2018) <doi:10.1093/bioinformatics/bty471>.
 License: Apache License (>= 2)
 Encoding: UTF-8
 LazyData: true
