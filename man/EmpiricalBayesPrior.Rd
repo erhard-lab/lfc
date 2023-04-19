@@ -5,12 +5,14 @@
 \title{Computes the prior parameters (i.e. pseudocounts incremented by 1) for
 the log2 fold change distribution}
 \usage{
-EmpiricalBayesPrior(A, B)
+EmpiricalBayesPrior(A, B, min.sd = 0)
 }
 \arguments{
 \item{A}{Vector of counts from condition A}
 
 \item{B}{Vector of counts from condition B}
+
+\item{min.sd}{minimal standard deviation of the prior}
 }
 \value{
 A vector of length 2 containing the two parameters

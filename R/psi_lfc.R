@@ -4,13 +4,14 @@
 #'
 #' @param A Vector of counts from condition A
 #' @param B Vector of counts from condition B
+#' @param min.sd minimal standard deviation of the prior
 #' @seealso PsiLFC
 #' @return A vector of length 2 containing the two parameters
 #' @export
-#' @importFrom stats median pnorm optim var quantile
+#' @importFrom stats median pnorm optim var quantile uniroot
 #' @examples
 #'   EmpiricalBayesPrior(rnorm(1000,200),rnorm(1000,100))
-EmpiricalBayesPrior=function(A,B) {
+EmpiricalBayesPrior=function(A,B,min.sd=0) {
 
     u=A>0 | B>0
     A=A[u]
@@ -23,7 +24,15 @@ EmpiricalBayesPrior=function(A,B) {
         y=var(log(A+1)-log(B+1))
     }
     opt.fun=function(v) (digamma(v[1])-digamma(v[2])-x)^2+(trigamma(v[1])+trigamma(v[2])-y)^2
-    optim(c(1,1),opt.fun)$par
+    re=optim(c(1,1),opt.fun)$par
+
+    sd = sqrt((trigamma(re[1])+trigamma(re[2]))/(log(2)^2))
+    if (sd<min.sd) {
+        f=uniroot(function(f) sqrt((trigamma(f*re[1])+trigamma(f*re[2]))/(log(2)^2))-min.sd,interval = c(1/sum(re),1))$root
+        warning(sprintf("Inflated prior by a factor of %.2f",1/f))
+        re=re*f
+    }
+    re
 }
 
 #' Subtract the median of the given vector (for normalizing log2 fold changes).
@@ -45,15 +54,18 @@ CenterMedian <- function(l) l-median(l,na.rm=TRUE)
 #' @param prior Vector of length 2 of the prior parameters
 #' @param normalizeFun Function to normalize the obtained effect sizes
 #' @param cre Compute credible intervals as well? (can also be a vector of quantiles)
+#' @param verbose verbose status updates?
 #'
 #' @return Either a vector containing the estimates, or a data frame containing
 #'     the credible interval as well
 #' @export
 #' @examples
 #'   PsiLFC(rnorm(1000,200),rnorm(1000,100))
-PsiLFC=function(A,B, prior=EmpiricalBayesPrior(A,B), normalizeFun=CenterMedian,cre=FALSE) {
+PsiLFC=function(A,B, prior=EmpiricalBayesPrior(A,B), normalizeFun=CenterMedian,cre=FALSE, verbose = FALSE) {
+    if (verbose) cat(sprintf("Using pseudocounts (%.2f,%.2f)\n",prior[1],prior[2]))
     lfc<-(digamma(A+prior[1])-digamma(B+prior[2]))/log(2)
     r<-normalizeFun(lfc)
+    if (verbose) cat(sprintf("Normalization, median shift: %.2f\n",median(lfc,na.rm=TRUE)-median(r,na.rm=TRUE)))
     if (all(cre==TRUE)) cre = c(0.05,0.95)
     if (!missing(cre) & any(cre!=FALSE)){
         s<-sapply(cre,function(c) qlfc(c,A+prior[1],B+prior[2]))

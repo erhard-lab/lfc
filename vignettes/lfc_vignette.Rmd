@@ -34,36 +34,33 @@ Let's consider a real world example:
 ```{R fig.height=5, fig.width=5, message=FALSE, warning=FALSE}
 library(DESeq2)
 library(lfc)
-data(airway, package="airway")
-A <- assay(airway)[,2]
-B <- assay(airway)[,1]
+
+# it is overly complicated to read a gzipped table from the internet. This is how it is done:
+t <- read.delim(textConnection(readLines(gzcon(url("https://www.ncbi.nlm.nih.gov/geo/download/?acc=GSE160764&format=file&file=GSE160764%5FRNA%5FMEF%5FOla%5FIFNb%5FCounttable%5FRaw%2Etxt%2Egz")))))
+
+A <- t[,4]
+B <- t[,2]
 
 ll <- PsiLFC(A,B)
-plot(ecdf(ll),xlim=c(-1,1),xlab="Log2 fold change treated/untreated",ylab="Cumulative frequency",main="Cell N61311",col='blue')
+plot(ecdf(ll),xlim=c(-1,1),xlab="Log2 fold change treated/untreated",ylab="Cumulative frequency",col='blue')
 lines(ecdf(CenterMedian(log2((A+1)/(B+1)))),col='red')
 ```
 
 This shows the log fold change distributions estimated by the posterior mean (blue) and the intuitive way using pseudocounts of 1 (red). This distribution is heavily distorted by several genes with no reads in any of the two conditions. Interestingly, the intuitive way of computing effect sizes results in an asymmetric distribution with more downregulated than upregulated genes.
 
 ```{R fig.width=5, fig.height=5}
-plot(ecdf(ll[A>0 | B>0]),xlim=c(-1,1),xlab="Log2 fold change treated/untreated",ylab="Cumulative frequency",main="Cell N61311",col='blue')
+plot(ecdf(ll[A>0 | B>0]),xlim=c(-1,1),xlab="Log2 fold change treated/untreated",ylab="Cumulative frequency",col='blue')
 lines(ecdf(CenterMedian(log2((A+1)/(B+1))[A>0 | B>0])),col='red')
 ``` 
 
 Here, only genes are considered that have at least one read in one of the two conditions. The intuitive fold changes still appear to overestimate changes, as well as show more artifacts.
 
-It is also possible to directly estimate effect sizes on SummarizedExperiment objects:
-
-```{R}
-head(PsiLFC.se(airway,contrast=c("dex","untrt","trt")))
-```
-
 Also, this package provides a drop-in replacement for DESeq2's `results` function:
 
 ```{R message=FALSE, warning=FALSE}
-dds <- DESeqDataSetFromMatrix(countData = assay(airway),colData = colData(airway),design= ~ dex)
+dds <- DESeqDataSetFromMatrix(countData = t[,2:5],colData = data.frame(IFN=c("0h","0h","1h","1h")),design= ~ IFN)
 dds <- DESeq(dds)
-res <- results(dds, contrast=c("dex","untrt","trt"),cre=TRUE)
+res <- results(dds, contrast=c("IFN","1h","0h"),cre=TRUE)
 head(res)
 ```
 

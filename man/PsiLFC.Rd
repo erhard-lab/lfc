@@ -9,7 +9,8 @@ PsiLFC(
   B,
   prior = EmpiricalBayesPrior(A, B),
   normalizeFun = CenterMedian,
-  cre = FALSE
+  cre = FALSE,
+  verbose = FALSE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ PsiLFC(
 \item{normalizeFun}{Function to normalize the obtained effect sizes}
 
 \item{cre}{Compute credible intervals as well? (can also be a vector of quantiles)}
+
+\item{verbose}{verbose status updates?}
 }
 \value{
 Either a vector containing the estimates, or a data frame containing

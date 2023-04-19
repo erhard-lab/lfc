@@ -41,15 +41,15 @@ generation for the log2 fold change  distribution with parameters
 }
 \section{Functions}{
 \itemize{
-\item \code{dlfc}: Density function
+\item \code{dlfc()}: Density function
 
-\item \code{plfc}: Distribution function
+\item \code{plfc()}: Distribution function
 
-\item \code{qlfc}: Quantile function
+\item \code{qlfc()}: Quantile function
 
-\item \code{rlfc}: random generation
+\item \code{rlfc()}: random generation
+
 }}
-
 \examples{
 x <- seq (-5,5,by=0.01)
 plot(x,dlfc(x,1,1))
