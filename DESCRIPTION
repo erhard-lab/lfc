@@ -1,9 +1,10 @@
 Package: lfc
 Type: Package
 Title: Log Fold Change Distribution Tools for Working with Ratios of Counts
-Version: 0.2.3
-Author: Florian Erhard
-Maintainer: Florian Erhard <florian.erhard@uni-wuerzburg.de>
+Version: 0.2.4
+Authors@R: c(
+    person("Florian", "Erhard", email = "Florian.Erhard@informatik.uni-regensburg.de", role = c("aut", "cre"), comment = c(ORCID = "0000-0002-3574-6983"))
+    )
 Description: Ratios of count data such as obtained from RNA-seq are modelled
     using Bayesian statistics to derive posteriors for effects sizes. This
     approach is described in Erhard & Zimmer (2015) <doi:10.1093/nar/gkv696> 
